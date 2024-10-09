@@ -8,6 +8,8 @@ use App\Models\School;
 use Directory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use RealRashid\SweetAlert\Facades\Alert;
+
 
 class StudentController extends Controller
 {
@@ -83,6 +85,7 @@ class StudentController extends Controller
         foreach ($students as $student) {
             $this->assignStudent($student->id);
         }
+        Alert::success('Success', 'Students assigned successfully');
         return redirect()->back()->with('success');
     }
     public function reset()
@@ -108,7 +111,7 @@ class StudentController extends Controller
         }
 
         Student::wherenotnull('school_id')->update(['school_id' => null]);
-
+        Alert::warning('Success', 'All Students unassigned');
         return redirect()->back()->with('success');
     }
 }

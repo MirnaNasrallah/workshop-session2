@@ -54,6 +54,21 @@ return [
             'engine' => null,
 
         ],
+        // 'mysql2' => [
+        //     'driver' => 'mysql',
+        //     'host' => env('DB_HOST_local', '127.0.0.1'),
+        //     'port' => env('DB_PORT_local', '3306'),
+        //     'database' => env('DB_DATABASE_local', 'forge'),
+        //     'username' => env('DB_USERNAME_local', 'forge'),
+        //     'password' => env('DB_PASSWORD_local', ''),
+        //     'unix_socket' => env('DB_SOCKET_local', ''),
+        //     'charset' => 'utf8mb4',
+        //     'collation' => 'utf8mb4_general_ci', // Change this line
+        //     'prefix' => '',
+        //     'strict' => true,
+        //     'engine' => null,
+
+        // ],
 
         'mariadb' => [
             'driver' => 'mariadb',
