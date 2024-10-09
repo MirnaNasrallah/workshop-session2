@@ -7,6 +7,7 @@ use App\Models\Student;
 use App\Models\School;
 use Directory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class StudentController extends Controller
 {
@@ -18,68 +19,69 @@ class StudentController extends Controller
         $students = Student::all();
         return view('dashboard', compact('students'));
     }
-    public function getDistance($student_location, $school_location)
+    public function assignStudent($student_id)
     {
-        $location = Location::where('location_from', $student_location)
-            ->where('location_to', $school_location)
-            ->first();
-
-        return $location ? $location->distance : PHP_INT_MAX;
-    }
-    public function findNearestLocation($student)
-    {
-        //school which its location distance from the student's location is minimum
-        //to_location - from_location = minimum distance
-        //to_location = school's location, from_location = $studnet_location
-
+        $student = Student::findOrFail($student_id);
+        $student_score = $student->last_year_score;
         $student_location = $student->location;
-        $schools = School::all();
 
-        $nearest_school = null;
-        $min_distance = PHP_INT_MAX;
-        foreach ($schools as $school) {
-            $school_location = $school->location;
-            $distance = $this->getDistance($student_location, $school_location);
-            if ($student_location == $school_location) {
-                $nearest_school = School::where('location', $student->location)->first();
+        $schoolId = null;
+
+        //join school score > min, has capacity, same location
+        $matching_schools =  School::where('minimum_score', '<=', $student_score)
+            ->where('location', $student_location)
+            ->get();
+        // $matching_schools = DB::statement('SELECT * FROM ')
+        foreach ($matching_schools as $school) {
+            if ($school->available_slots > 0) {
+                $schoolId = $school->id;
                 break;
-                if ($distance < $min_distance) {
-                    $min_distance = $distance;
-                    $nearest_school = $school;
-                }
-
             }
         }
-        return $nearest_school;
-    }
 
-    public function assignStudents()
-    {
-        //  $school_id = $request->all();
-        $students = Student::all();
-        $schools = School::all();
-        $nearest_school = null;
+        if (!$schoolId) {
+            //student location = location_from , school location : location_to .
+            //a2al distance between that student and any available school
+            $nearest_location = Location::where('location_from', $student_location)
+                ->orderBy('distance')
+                ->first('location_to');
 
-        foreach ($students as $student) {
+            // if nearest location exists, find school min score < student score
+            if ($nearest_location) {
+                $nearest_schools = School::where('minimum_score', '<=', $student_score)
+                    ->where('location', $nearest_location->location_to)
+                    ->get();
 
-            if ($student->school_id == null) {
-                foreach ($schools as $school) {
-
-                    if ($student->last_year_score >= $school->minimum_score) {
-                        $student->school_id = $school->id;
-                        $student->save();
-
+                foreach ($nearest_schools as $school) {
+                    if ($school->available_slots > 0) {
+                        $schoolId = $school->id;
                         break;
-                    } else {
-                        $nearest_school = $this->findNearestLocation($student);
-                        if ($nearest_school) {
-                            $student->school_id = $nearest_school->id;
-                            $student->save();
-                            break;
-                        }
                     }
                 }
             }
+        }
+        if ($schoolId) {
+            //increment student count by 1
+            //decrement available slots by 1
+            //fields in table school
+            $school->decrement('available_slots');
+            $school->increment('student_count');
+            $student->school_id = $schoolId;
+            $student->save();
+        } else {
+            //student did not get assigned
+
+        }
+        return ;
+    }
+    public function assignStudents()
+    {
+        $students = Student::all();
+        // student assigned according to their scores
+        // min school accept
+        // availability of the student count school
+        foreach ($students as $student) {
+            $this->assignStudent($student->id);
         }
         return redirect()->back()->with('success');
     }
@@ -91,7 +93,22 @@ class StudentController extends Controller
         //         $student->school_id = null;
         //         $student->save();
         //     }
+        // Student::wherenotnull('school_id')->update(['school_id' => null]);
+        //get all assigned students
+        $students = Student::whereNotNull('school_id')->get();
+        foreach ($students as $student) {
+            //find the school that this student is assigned to
+            $school = School::find($student->school_id);
+            if ($school) {
+                //decrement student_count by 1
+                $school->decrement('student_count');
+                //increment available slots by 1
+                $school->increment('available_slots');
+            }
+        }
+
         Student::wherenotnull('school_id')->update(['school_id' => null]);
+
         return redirect()->back()->with('success');
     }
 }

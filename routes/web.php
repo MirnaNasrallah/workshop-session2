@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,5 +19,6 @@ Route::middleware('auth')->group(function () {
 });
 Route::get('/assignStudents', [StudentController::class, 'assignStudents'])->name('assignStudents');
 Route::get('/reset', [StudentController::class, 'reset'])->name('reset');
+Route::get('/schools/{id}',[SchoolController::class,'show'])->name('show.school');
 
 require __DIR__.'/auth.php';

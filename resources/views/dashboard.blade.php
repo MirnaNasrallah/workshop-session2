@@ -30,7 +30,17 @@
                                         <td>{{ $student->gender }}</td>
                                         <td>{{ $student->last_year_score }}</td>
                                         <td>{{ $student->location }}</td>
-                                        <td>{{ $student->school_id }}</td>
+                                        <td>
+                                            @if ($student->school_id)
+
+                                            <a href="{{ route('show.school',['id' =>$student->school_id] )  }}">
+                                                {{ $student->school_id }} </a>
+
+                                            @else
+                                              Not assigned
+                                            @endif
+
+                                        </td>
                                     </tr>
                                 @endforeach
                                 <form action="{{ route('assignStudents') }}">
