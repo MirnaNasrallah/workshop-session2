@@ -1,0 +1,6 @@
+[
+    {"id": 1, "name": "School A", "location": "A", "minimum_score": 80},
+    {"id": 2, "name": "School B", "location": "B", "minimum_score": 70},
+    {"id": 3, "name": "School C", "location": "C", "minimum_score": 65},
+    {"id": 4, "name": "School D", "location": "D", "minimum_score": 85}
+]

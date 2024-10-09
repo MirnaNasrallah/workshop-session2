@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.table {
+    width: 100%;
+    margin-top: 20px;
+    border: 1px solid #ddd;
+}
+
+.table th, .table td {
+    padding: 15px;
+    text-align: left;
+}
+
+.btn-success {
+    background-color: #28a745;
+    border: none;
+    padding: 10px 15px;
+    color: white;
+    text-decoration: none;
+}.btn-danger {
+    background-color: #a74c28;
+    border: none;
+    padding: 10px 15px;
+    color: white;
+    text-decoration: none;
+}

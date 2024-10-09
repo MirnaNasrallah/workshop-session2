@@ -1,0 +1,12 @@
+[
+    {"id": 1, "name": "John Doe", "birthdate": "2006-01-15", "gender": "male", "last_year_score": 60, "location": "A", "school_id": null},
+    {"id": 2, "name": "Jane Smith", "birthdate": "2007-05-12", "gender": "female", "last_year_score": 65, "location": "B", "school_id": null},
+    {"id": 3, "name": "Robert Johnson", "birthdate": "2006-09-22", "gender": "male", "last_year_score": 67, "location": "C", "school_id": null},
+    {"id": 4, "name": "Emily Davis", "birthdate": "2007-02-03", "gender": "female", "last_year_score": 70, "location": "D", "school_id": null},
+    {"id": 5, "name": "John Doe", "birthdate": "2006-01-15", "gender": "male", "last_year_score": 72, "location": "A", "school_id": null},
+    {"id": 6, "name": "Jane Smith", "birthdate": "2007-05-12", "gender": "female", "last_year_score": 80, "location": "B", "school_id": null},
+    {"id": 7, "name": "Robert Johnson", "birthdate": "2006-09-22", "gender": "male", "last_year_score": 82, "location": "C", "school_id": null},
+    {"id": 8, "name": "Emily Davis", "birthdate": "2007-02-03", "gender": "female", "last_year_score": 85, "location": "D", "school_id": null},
+    {"id": 9, "name": "John Doe", "birthdate": "2006-01-15", "gender": "male", "last_year_score": 90, "location": "A", "school_id": null}
+]
+

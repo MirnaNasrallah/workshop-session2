@@ -1,0 +1,19 @@
+[
+    {"location_from": "A", "location_to": "B", "distance": 5},
+    {"location_from": "B", "location_to": "A", "distance": 5},
+
+    {"location_from": "A", "location_to": "C", "distance": 3},
+    {"location_from": "C", "location_to": "A", "distance": 3},
+
+    {"location_from": "A", "location_to": "D", "distance": 8},
+    {"location_from": "D", "location_to": "A", "distance": 8},
+
+    {"location_from": "B", "location_to": "C", "distance": 4},
+    {"location_from": "C", "location_to": "B", "distance": 4},
+    
+    {"location_from": "B", "location_to": "D", "distance": 7},
+    {"location_from": "D", "location_to": "B", "distance": 7},
+
+    {"location_from": "C", "location_to": "D", "distance": 6},
+    {"location_from": "D", "location_to": "C", "distance": 6}
+]
